@@ -1,0 +1,46 @@
+  
+/*
+ * rake: Expression Evaluation / Tree Contraction
+ * Copyright (C) 1997-2004  David A. Bader
+ *
+ * Authors:             David A. Bader
+ */
+
+
+Input: The type of tree and log (to the base 2) of the total number of
+vertices in the tree. The permissible values for the type of tree are: 
+0 - a FULL Tree.
+1 - a CATerpillar Tree.
+2 - a RANdom Tree.
+
+Dependency: A slightly modified version of ListRanking that returns the
+s_list_ptr->prefix when s_list_ptr -> succ < 0 (The prefix value of
+the final element of the linked list). This represents the total
+number of leaves for tree contraction. 
+
+Output: A single line containing input information and time taken by
+various steps appended to the file "result.txt" in the local
+directory. The order is:   
+Treetype THREADS log_2(n) serial_time euler_tour_time listranking_time leafarray_time rake_time Parallel_time Speedup 
+
+Compilation: standard with the -DRRANDOM flag.
+
+Command Line Invocation:
+rake -t #threads -- Tree_Type log_2(n)
+
+Example:
+To rake a FULL Tree with (2^20-1) vertices with 2 threads:
+rake -t 2 -- 0 20 
+
+The code takes the input and generates the correct type of tree with
+the required number of vertices. It then proceeds with the tree
+contraction algorithm having the following steps in this order. 
+1. Euler Tour 
+2. List Ranking
+3. Copying the leaves into an auxiliary array
+4. Raking the leaves and finding the value of the arithmetic expression.
+
+It also sequentially computes the value of the arithmetic expression
+and also finally computes the speedup = Sequential Time / Parallel
+Time. 
+
